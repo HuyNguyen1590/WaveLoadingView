@@ -88,7 +88,7 @@ public class WaveLoadingView extends View {
 
     // Properties.
     private String mTopTitle;
-    private String mCenterTitle;
+    private CharSequence mCenterTitle;
     private String mBottomTitle;
     private float mDefaultWaterLevel;
     private float mWaterLevelRatio = 1f;
@@ -214,7 +214,7 @@ public class WaveLoadingView extends View {
         mCenterTitleStrokePaint.setAntiAlias(true);
         mCenterTitleStrokePaint.setTextSize(mCenterTitlePaint.getTextSize());
 
-        mCenterTitle = attributes.getString(R.styleable.WaveLoadingView_wlv_titleCenter);
+        mCenterTitle = attributes.getText(R.styleable.WaveLoadingView_wlv_titleCenter);
 
         // Init Bottom Title
         mBottomTitlePaint = new Paint();
@@ -340,12 +340,12 @@ public class WaveLoadingView extends View {
             }
 
             if (!TextUtils.isEmpty(mCenterTitle)) {
-                float middle = mCenterTitlePaint.measureText(mCenterTitle);
+                float middle = mCenterTitlePaint.measureText(mCenterTitle.toString());
                 // Draw the stroke of centered text
-                canvas.drawText(mCenterTitle, (getWidth() - middle) / 2,
+                canvas.drawText(mCenterTitle.toString().substring(0,mCenterTitle.length()-2), (getWidth() - middle) / 2,
                         getHeight() / 2 - ((mCenterTitleStrokePaint.descent() + mCenterTitleStrokePaint.ascent()) / 2), mCenterTitleStrokePaint);
                 // Draw the centered text
-                canvas.drawText(mCenterTitle, (getWidth() - middle) / 2,
+                canvas.drawText(mCenterTitle.toString().substring(0,mCenterTitle.length()-2), (getWidth() - middle) / 2,
                         getHeight() / 2 - ((mCenterTitlePaint.descent() + mCenterTitlePaint.ascent()) / 2), mCenterTitlePaint);
             }
 
@@ -604,11 +604,11 @@ public class WaveLoadingView extends View {
         return mTopTitle;
     }
 
-    public void setCenterTitle(String centerTitle) {
+    public void setCenterTitle(CharSequence centerTitle) {
         mCenterTitle = centerTitle;
     }
 
-    public String getCenterTitle() {
+    public CharSequence getCenterTitle() {
         return mCenterTitle;
     }
 
