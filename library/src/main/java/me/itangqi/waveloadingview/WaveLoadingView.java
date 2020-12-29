@@ -112,10 +112,12 @@ public class WaveLoadingView extends View {
     private Paint mTopTitlePaint;
     private Paint mBottomTitlePaint;
     private Paint mCenterTitlePaint;
+    private Paint mCenterTitlePaintPercent;
 
     private Paint mTopTitleStrokePaint;
     private Paint mBottomTitleStrokePaint;
     private Paint mCenterTitleStrokePaint;
+    private Paint mCenterTitleStrokePaintPercent;
 
     // Animation.
     private ObjectAnimator waveShiftAnim;
@@ -207,12 +209,25 @@ public class WaveLoadingView extends View {
         mCenterTitlePaint.setAntiAlias(true);
         mCenterTitlePaint.setTextSize(attributes.getDimension(R.styleable.WaveLoadingView_wlv_titleCenterSize, sp2px(DEFAULT_TITLE_CENTER_SIZE)));
 
+        mCenterTitlePaintPercent = new Paint();
+        mCenterTitlePaintPercent.setColor(attributes.getColor(R.styleable.WaveLoadingView_wlv_titleCenterColor, DEFAULT_TITLE_COLOR));
+        mCenterTitlePaintPercent.setStyle(Paint.Style.FILL);
+        mCenterTitlePaintPercent.setAntiAlias(true);
+        mCenterTitlePaintPercent.setTextSize((attributes.getDimension(R.styleable.WaveLoadingView_wlv_titleCenterSize, sp2px(DEFAULT_TITLE_CENTER_SIZE)))/2);
+
         mCenterTitleStrokePaint = new Paint();
         mCenterTitleStrokePaint.setColor(attributes.getColor(R.styleable.WaveLoadingView_wlv_titleCenterStrokeColor, DEFAULT_STROKE_COLOR));
         mCenterTitleStrokePaint.setStrokeWidth(attributes.getDimension(R.styleable.WaveLoadingView_wlv_titleCenterStrokeWidth, dp2px(DEFAULT_TITLE_STROKE_WIDTH)));
         mCenterTitleStrokePaint.setStyle(Paint.Style.STROKE);
         mCenterTitleStrokePaint.setAntiAlias(true);
         mCenterTitleStrokePaint.setTextSize(mCenterTitlePaint.getTextSize());
+
+        mCenterTitleStrokePaintPercent = new Paint();
+        mCenterTitleStrokePaintPercent.setColor(attributes.getColor(R.styleable.WaveLoadingView_wlv_titleCenterStrokeColor, DEFAULT_STROKE_COLOR));
+        mCenterTitleStrokePaintPercent.setStrokeWidth(attributes.getDimension(R.styleable.WaveLoadingView_wlv_titleCenterStrokeWidth, dp2px(DEFAULT_TITLE_STROKE_WIDTH)));
+        mCenterTitleStrokePaintPercent.setStyle(Paint.Style.STROKE);
+        mCenterTitleStrokePaintPercent.setAntiAlias(true);
+        mCenterTitleStrokePaintPercent.setTextSize(mCenterTitlePaint.getTextSize()/2);
 
         mCenterTitle = attributes.getText(R.styleable.WaveLoadingView_wlv_titleCenter);
 
@@ -342,11 +357,18 @@ public class WaveLoadingView extends View {
             if (!TextUtils.isEmpty(mCenterTitle)) {
                 float middle = mCenterTitlePaint.measureText(mCenterTitle.toString());
                 // Draw the stroke of centered text
-                canvas.drawText(mCenterTitle.toString().substring(0,mCenterTitle.length()-2), (getWidth() - middle) / 2,
+                canvas.drawText(mCenterTitle.toString().substring(0,mCenterTitle.length()-1), (getWidth() - middle) / 2,
                         getHeight() / 2 - ((mCenterTitleStrokePaint.descent() + mCenterTitleStrokePaint.ascent()) / 2), mCenterTitleStrokePaint);
                 // Draw the centered text
-                canvas.drawText(mCenterTitle.toString().substring(0,mCenterTitle.length()-2), (getWidth() - middle) / 2,
+                canvas.drawText(mCenterTitle.toString().substring(0,mCenterTitle.length()-1), (getWidth() - middle) / 2,
                         getHeight() / 2 - ((mCenterTitlePaint.descent() + mCenterTitlePaint.ascent()) / 2), mCenterTitlePaint);
+
+                // Draw the stroke of centered text percent symbol
+                canvas.drawText(mCenterTitle.toString().substring(mCenterTitle.length()-1), (getWidth() - middle) / 2,
+                        getHeight() / 2 - ((mCenterTitleStrokePaint.descent() + mCenterTitleStrokePaint.ascent()) / 2), mCenterTitleStrokePaintPercent);
+                // Draw the centered text percent symbol
+                canvas.drawText(mCenterTitle.toString().substring(mCenterTitle.length()-1), (getWidth() - middle) / 2,
+                        getHeight() / 2 - ((mCenterTitlePaint.descent() + mCenterTitlePaint.ascent()) / 2), mCenterTitlePaintPercent);
             }
 
             if (!TextUtils.isEmpty(mBottomTitle)) {
