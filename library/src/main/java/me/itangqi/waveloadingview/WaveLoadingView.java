@@ -364,10 +364,10 @@ public class WaveLoadingView extends View {
                         getHeight() / 2 - ((mCenterTitlePaint.descent() + mCenterTitlePaint.ascent()) / 2), mCenterTitlePaint);
 
                 // Draw the stroke of centered text percent symbol
-                canvas.drawText(mCenterTitle.toString().substring(mCenterTitle.length()-1), (getWidth() - middle) / 2,
+                canvas.drawText(mCenterTitle.toString().substring(mCenterTitle.length()-1), middle,
                         getHeight() / 2 - ((mCenterTitleStrokePaint.descent() + mCenterTitleStrokePaint.ascent()) / 2), mCenterTitleStrokePaintPercent);
                 // Draw the centered text percent symbol
-                canvas.drawText(mCenterTitle.toString().substring(mCenterTitle.length()-1), (getWidth() - middle) / 2,
+                canvas.drawText(mCenterTitle.toString().substring(mCenterTitle.length()-1), middle,
                         getHeight() / 2 - ((mCenterTitlePaint.descent() + mCenterTitlePaint.ascent()) / 2), mCenterTitlePaintPercent);
             }
 
